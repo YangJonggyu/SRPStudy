@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 
-public class MeshBall : MonoBehaviour {
-
-	static int baseColorId = Shader.PropertyToID("_BaseColor");
+public class MeshBall : MonoBehaviour
+{
+	private static int
+		baseColorId = Shader.PropertyToID("_BaseColor");
 
 	[SerializeField]
 	Mesh mesh = default;

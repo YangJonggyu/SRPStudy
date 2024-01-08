@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 
 [DisallowMultipleComponent]
-public class PerObjectMaterialProperties : MonoBehaviour {
-
-	static int baseColorId = Shader.PropertyToID("_BaseColor");
-	static int cutoffId = Shader.PropertyToID("_Cutoff");
+public class PerObjectMaterialProperties : MonoBehaviour
+{
+	private static int
+		baseColorId = Shader.PropertyToID("_BaseColor"),
+		cutoffId = Shader.PropertyToID("_Cutoff");
 
 	static MaterialPropertyBlock block;
 

@@ -36,6 +36,5 @@ float4x4 unity_prev_MatrixIM;
 // 이전 프레임의 모델 변환 행렬의 역변환 행렬.
 
 float4x4 glstate_matrix_projection;
-// OpenGL 스타일의 투영 변환 행렬.
 
 #endif

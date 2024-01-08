@@ -6,7 +6,7 @@
 // Unity의 기본 셰이더 라이브러리 포함.
 // Common.hlsl에는 기본적인 셰이더 변수와 함수들이 정의되어 있습니다.
 #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
-
+#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
 // Unity의 입력 구조체와 변수들을 정의하는 라이브러리 포함.
 #include "UnityInput.hlsl"
 
@@ -22,7 +22,6 @@
 
 // GPU 인스턴싱에 필요한 함수와 매크로를 포함하는 라이브러리.
 #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
-
 // 공간 변환(예: 월드 좌표계에서 뷰 좌표계로의 변환)에 사용되는 함수들을 포함하는 라이브러리.
 #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/SpaceTransforms.hlsl"
 
