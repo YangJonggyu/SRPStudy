@@ -25,4 +25,8 @@
 // 공간 변환(예: 월드 좌표계에서 뷰 좌표계로의 변환)에 사용되는 함수들을 포함하는 라이브러리.
 #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/SpaceTransforms.hlsl"
 
+float Square (float x) {
+    return x * x;
+}
+
 #endif
