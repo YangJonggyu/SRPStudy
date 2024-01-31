@@ -28,7 +28,7 @@ public partial class CameraRenderer {
 	// 카메라 렌더링을 수행하는 메인 함수입니다.
 	public void Render (
 		ScriptableRenderContext context, Camera camera,
-		bool useDynamicBatching, bool useGPUInstancing
+		bool useDynamicBatching, bool useGPUInstancing, ShadowSettings shadowSettings
 	) {
 		this.context = context;
 		this.camera = camera;
@@ -46,15 +46,18 @@ public partial class CameraRenderer {
 		// 3. Cull()
 		// 카메라의 뷰 프러스텀 내에 있는 렌더링할 객체들을 결정하는 컬링 과정을 수행합니다.
 		// 이 함수는 카메라에 보이는 객체들만 선택하여 불필요한 렌더링을 줄여 성능을 최적화합니다.
-		if (!Cull()) {
+		if (!Cull(shadowSettings.maxDistance)) {
 			return;
 		}
 
 		// 4. Setup()
 		// 렌더링을 위한 카메라와 렌더링 환경 설정을 합니다.
 		// 카메라 속성 설정, 클리어 플래그에 따른 렌더 타겟 클리어 등을 포함합니다.
+		buffer.BeginSample(SampleName);
+		ExecuteBuffer();
+		lighting.Setup(context, cullingResults, shadowSettings);
+		buffer.EndSample(SampleName);
 		Setup();
-		lighting.Setup(context, cullingResults);
 		
 		// 5. DrawVisibleGeometry()
 		// 화면에 보여질 기하학적 객체들을 렌더링합니다.
@@ -74,12 +77,14 @@ public partial class CameraRenderer {
 		// 8. Submit()
 		// 모든 렌더링 명령들을 실제로 실행하기 위해 커맨드 버퍼를 제출하는 함수입니다.
 		// 이 과정을 통해 최종적으로 렌더링된 이미지가 화면에 표시됩니다.
+		lighting.Cleanup();
 		Submit();
 	}
 
 	// 카메라 뷰에 따라 렌더링할 객체를 결정하는 컬링 과정입니다.
-	bool Cull () {
+	bool Cull (float maxShadowDistance) {
 		if (camera.TryGetCullingParameters(out ScriptableCullingParameters p)) {
+			p.shadowDistance = Mathf.Min(maxShadowDistance, camera.farClipPlane);
 			cullingResults = context.Cull(ref p);
 			return true;
 		}
